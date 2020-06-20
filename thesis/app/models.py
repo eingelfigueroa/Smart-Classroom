@@ -8,11 +8,12 @@ class MyStaffManager(BaseUserManager):
             raise ValueError("Users must have an email address")
         if not username:
             raise ValueError("Users must have a username")
+       
 
         user = self.model(
                 email=self.normalize_email(email),
                 username=username,
-                 
+                
             )
 
         user.set_password(password)
@@ -51,8 +52,7 @@ class Staff(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
+    fullname = models.CharField(max_length=60)
     position = models.CharField(max_length=45)
     department_fk = models.ForeignKey(
         Department, models.CASCADE, db_column='department_fk', default=1)
@@ -96,7 +96,18 @@ class CourseHasStudent(models.Model):
 
 
 class Schedule(models.Model):
-    day = models.CharField(max_length=22)
+
+    DAYS = (
+        ('Sunday', 'Sunday'),
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+
+    )
+    day = models.CharField(max_length=22, choices=DAYS)
     time_start = models.TimeField()
     time_end = models.TimeField()
     classroom_fk = models.ForeignKey(
@@ -104,9 +115,15 @@ class Schedule(models.Model):
 
 
 class Section(models.Model):
+    SEM = (
+        ('1st', '1st'),
+        ('2nd', '2nd'),
+        ('Summer','Summer'),
+    )
+
     section_code = models.CharField(max_length=22)
     academic_year = models.CharField(max_length=22)
-    semester = models.CharField(max_length=22)
+    semester = models.CharField(max_length=22, choices=SEM)
     course_fk = models.ForeignKey(
         Course, models.CASCADE, db_column='course_fk')
     course_staff_fk = models.ForeignKey(
