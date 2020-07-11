@@ -5,28 +5,28 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import argparse
-import facenet
-import detect_face
+from . import facenet
+from . import detect_face
 import os
 import sys
 import math
 import pickle
 from sklearn.svm import SVC
 
-def classify():
+def classification():
 
     with tf.Graph().as_default():
 
         with tf.Session() as sess:
 
-            datadir = './processed_image'
+            datadir = 'app/processed_image'
             dataset = facenet.get_dataset(datadir)
             paths, labels = facenet.get_image_paths_and_labels(dataset)
             print('Number of classes: %d' % len(dataset))
             print('Number of images: %d' % len(paths))
 
             print('Loading feature extraction model')
-            modeldir = './model/20170511-185253.pb'
+            modeldir = 'app/model/20170511-185253.pb'
             facenet.load_model(modeldir)
 
             images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
@@ -49,7 +49,7 @@ def classify():
                 feed_dict = {images_placeholder: images, phase_train_placeholder: False}
                 emb_array[start_index:end_index, :] = sess.run(embeddings, feed_dict=feed_dict)
 
-            classifier_filename = './classifier/classifier.pkl'
+            classifier_filename = 'app/classifier/classifier.pkl'
             classifier_filename_exp = os.path.expanduser(classifier_filename)
 
             # Train classifier

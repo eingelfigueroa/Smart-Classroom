@@ -2,30 +2,30 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import tensorflow as tf
-from scipy import misc
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-import argparse
-import facenet
-import detect_face
-import os
-from os.path import join as pjoin
-import sys
-import time
-import copy
-import math
-import pickle
-from sklearn.svm import SVC
-from sklearn.externals import joblib
-import time
-import save_image
+import tensorflow as tf #
+from scipy import misc #
+import cv2#
+import matplotlib.pyplot as plt #
+import numpy as np #
+import argparse #
+from . import facenet #
+from . import detect_face #
+import os #
+from os.path import join as pjoin #
+import sys #
+import time #
+import copy #
+import math #
+import pickle #
+from sklearn.svm import SVC #
+from sklearn.externals import joblib #
+import time #
+from . import save_image
 
-def recognize():
-    path = "./detected"
+def detection():
+    path = "app/detected"
     img_path='me.jpg'
-    train_img="./train_img"
+    train_img="app/train_img"
 
 
 
@@ -35,7 +35,7 @@ def recognize():
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.6)
         sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
-            pnet, rnet, onet = detect_face.create_mtcnn(sess, './npy')
+            pnet, rnet, onet = detect_face.create_mtcnn(sess, 'app/npy')
 
             minsize = 20  # minimum size of face
             threshold = [0.6, 0.7, 0.7]  # three steps's threshold
@@ -50,7 +50,7 @@ def recognize():
             HumanNames.sort()
 
             print('Loading feature extraction model')
-            modeldir = './model/20170511-185253.pb'
+            modeldir = 'app/model/20170511-185253.pb'
             facenet.load_model(modeldir)
 
             images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
@@ -58,7 +58,7 @@ def recognize():
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
             embedding_size = embeddings.get_shape()[1]
 
-            classifier_filename = './classifier/classifier.pkl'
+            classifier_filename = 'app/classifier/classifier.pkl'
             classifier_filename_exp = os.path.expanduser(classifier_filename)
             with open(classifier_filename_exp, 'rb') as infile:
                 (model, class_names) = pickle.load(infile)
@@ -170,7 +170,7 @@ def recognize():
                     # c+=1
                     cv2.imshow('Video', frame)
 
-                    if cv2.waitKey(100) & 0xFF == ord('q'):
+                    if cv2.waitKey(3000) & 0xFF == ord('q'):
                         break
                     end_time=time.time()                ### This function gives the detection
                     elapsed = end_time - start_time     ### only 20 secs to execute

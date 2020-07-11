@@ -1,0 +1,31 @@
+{% extends 'app/main.html'%}
+
+{% block content %}
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-lg">Return </a>
+   
+<div class="container-fluid">
+     
+<br>
+    <div class="col-md-12">
+
+<div class="row">
+
+<form id="target" enctype="multipart/form-data" action='/upload/' method="POST">
+    {% csrf_token %}
+   
+    <div class="form-group">
+        <label for="name">Folder name</label>
+        <input type="text" name="name" class="form-control"  placeholder="Enter Name">
+        <small id="emailHelp" class="form-text text-muted">Folder name shoud be the Full Firstname, Middlename and Surname.</small>
+        <input type="file" name="document" multiple>
+     
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+</div>
+</div>
+{% endblock %}

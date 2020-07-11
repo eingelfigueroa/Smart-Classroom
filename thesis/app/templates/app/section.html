@@ -1,0 +1,64 @@
+
+{% extends 'app/main.html'%}
+
+{% block content %}
+<div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Hi, {{request.user.fullname}}, these are the sections that you teach</h1>
+          
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Sections </h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                    <th>Section</th>
+                    <th>Course</th>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>Schedule</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Room</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                    <th>Section</th>
+                    <th>Course</th>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>Schedule</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Room</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {% for s in sections %}
+                      <tr>
+                        <td><a href="{% url 'students' s.id %}">{{ s.section_code }}</a></td>
+                        <td>{{ s.course_fk.code }}</td>
+                        <td>{{ s.academic_year }}</td>
+                        <td>{{ s.semester }}</td>
+                        <td>{{ s.schedule_fk.day }}</td>
+                        <td>{{ s.schedule_fk.time_start }}</td>
+                        <td>{{ s.schedule_fk.time_end }}</td>
+                        <td>{{ s.schedule_fk.classroom_fk.name }}</td>
+                    
+                      </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+{% endblock %}

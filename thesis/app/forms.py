@@ -22,16 +22,28 @@ class CourseForm(ModelForm):
         model = Course
         fields = '__all__'
 
-class SectionForm(CourseForm):
-    def __init__(self, *args, **kwargs):
-        super(SectionForm,self).__init__(*args,**kwargs)
 
-    class Meta(CourseForm.Meta):
+
+
+
+
+
+class SectionForm(ModelForm):
+
+   # def __init__(self, *args, **kwargs):
+      #  super(SectionForm, self).__init__(*args, **kwargs)
+        #self.fields['course_staff_fk'].queryset = Course.objects.filter(staff_fk=course_staff_fk)
+
+    class Meta:
         model = Section
         fields = '__all__'
         
 
     
+
+
+
+
 
 class ScheduleForm(ModelForm):
     class Meta:

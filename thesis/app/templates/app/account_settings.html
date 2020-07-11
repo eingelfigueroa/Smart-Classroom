@@ -1,29 +1,13 @@
-{%  extends 'app/main.html' %}
-{% load static %}
+{% extends 'app/main.html'%}
+
 {% block content %}
-
-<style>
-	.profile-pic{
-		max-width: 200px;
-		max-height:200px;
-		margin: 0 auto;
-		border-radius: 50%;
-	}
-</style>
-
-<br>
+<div class="container-fluid">
+<h5>Hi this your default home page, if you are a new user please check thoroughly 
+		if your personal details are correct if it is not you may change it accordingly. If you are done
+		or wish nothing to be corrected please go to your sections</h5>
+	<div class="col-md-12">
 <div class="row">
-	<div class="col-md-3">
-		<div class="card card-body">
-			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Home</a>
-			<hr>
-			<h3 style="text-align: center">Account Settings</h3>
-			<hr>
-			
-		
-		</div>
-	</div>
-	<div class="col-md-9">
+	
 		<div class="card card-body">
 			
 			<form method="POST" action="" enctype="multipart/form-data">
@@ -31,11 +15,18 @@
 				{{form.as_p}}
 		
 			<input class="btn btn-primary" type="submit" name="Update Information">
+			
+			
 			</form>
+			
 		</div>
 	</div>
+	
 </div>
-
+<br>
+<a class="btn btn-warning" href="{% url 'section' request.user.id %}">Go to your Sections</a>
+		
+</div>
 
 
 {% endblock %}

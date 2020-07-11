@@ -8,7 +8,7 @@ import os
 import argparse
 import tensorflow as tf
 import numpy as np
-import facenet
+from . import facenet
 from . import detect_face
 import random
 from time import sleep
@@ -17,12 +17,12 @@ from time import sleep
 
 def align():
 
-    output_dir_path = './processed_image'
+    output_dir_path = 'app/processed_image'
     output_dir = os.path.expanduser(output_dir_path)
     if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-    datadir = './train_img'
+    datadir = 'app/train_img'
     dataset = facenet.get_dataset(datadir)
 
     print('Creating networks and loading parameters')
@@ -30,7 +30,7 @@ def align():
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.5)
         sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
-            pnet, rnet, onet = detect_face.create_mtcnn(sess, './npy')
+            pnet, rnet, onet = detect_face.create_mtcnn(sess, 'app/npy')
 
     minsize = 20  # minimum size of face
     threshold = [0.6, 0.7, 0.7]  # three steps's threshold

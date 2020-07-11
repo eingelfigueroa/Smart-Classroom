@@ -1,0 +1,47 @@
+{% extends 'app/main.html'%}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="col-md-12">
+<div class="row">
+	
+	
+			<div class="card-columns">
+		<div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center">Upload</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">You can upload images here</h5>
+                    <p class="card-text">Due to that the system is under development it is recommended that you add the images directly to the folder.</p>
+                    <a href="{% url 'upload' %}" class="btn btn-primary">Proceed</a>
+            </div>
+        </div>
+        <br>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center" >Align</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">Align the images</h5>
+                    <p class="card-text">Image alignment is done to capture only the ROI of the images.</p>
+                    <a href="{% url 'align' %}" class="btn btn-primary">Align</a>
+            </div>
+        </div>
+        
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header text-center">Classify</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">Creating a Classifier</h5>
+                    <p class="card-text">This part is where we create a classifier of the model, 
+                    it will properly detect and recognize images within the 
+                    image database if the image is not recognized it will still be detected</p>
+                    <a href="{% url 'classify' %}" class="btn btn-primary">Classify</a>
+            </div>
+        </div>
+			
+	</div>
+
+</div>
+</div>
+
+
+{% endblock %}

@@ -78,7 +78,7 @@ class Course(models.Model):
     staff_fk = models.ForeignKey('Staff', models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return '%s,%s' %(self.name, self.staff_fk)
 
 
 class Classroom(models.Model):
@@ -113,6 +113,8 @@ class Schedule(models.Model):
     classroom_fk = models.ForeignKey(
         Classroom, models.CASCADE, db_column='classroom_fk')
 
+    def __str__(self):
+        return '%s %s %s %s' % (self.day, self.time_start, self.time_end, self.classroom_fk)
 
 class Section(models.Model):
     SEM = (
@@ -147,12 +149,14 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
-
 class Recorded(models.Model):
 
     student_name = models.CharField(max_length=22)
     time_detected = models.DateTimeField()
     image = models.BinaryField()
+
+    def __str__(self):
+        return self.time_detected
 
 
 class StudentAttendance(models.Model):
